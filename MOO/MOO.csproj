@@ -55,6 +55,12 @@
     <Compile Include="Galaxy.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Ship.cs" />
+    <Compile Include="ShipViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShipViewControl.Designer.cs">
+      <DependentUpon>ShipViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Star.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Program.cs" />
@@ -71,6 +77,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ShipViewControl.resx">
+      <DependentUpon>ShipViewControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

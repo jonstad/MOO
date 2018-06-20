@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MOO
 {
-    class Astroid
+    public class Astroid
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MOO
 {
-    class Location
+    public class Location
     {
         public int X { get; set; }
         public int Y { get; set; }

@@ -8,26 +8,43 @@ using System.Threading.Tasks;
 namespace MOO
 {
     public enum GalaxyType {Spiral, Oval}
-    class Galaxy
+    public static class Galaxy
     {
-        public int Size { get; set; }
-        public GalaxyType Type { get; set; }
-        public List<Star> globes { get; set; }
-        public Galaxy()
+        public static  int Size { get; set; }
+        public static GalaxyType Type { get; set; }
+        public  static List<Star> stars { get; set; }
+        public static List<Ship> Ships { get; set; }
+        public static void Init()
         {
             Size = 500;
             Type = GalaxyType.Spiral;
-            InitGlobes();
+            Ships = new List<Ship>();
+            InitStars();
+            InitShips();
         }
-        public void InitGlobes()
+        private static void InitShips()
         {
-            globes = new List<Star>();
+            Ships.Add(new Ship(0, new Location(100, 100)));
+            Ships.Add(new Ship(2, new Location(150, 50)));
+            Ships[0].Destination = stars[0].Planets[0];
+            Ships[1].Destination = stars[1].Planets[0];
+        }
+        static void InitStars()
+        {
+            stars = new List<Star>();
             Random r = new Random();
-            globes.Add(new Star(112, 314, 22, Color.Red, "Bernard",r.Next()));
-            globes.Add(new Star(52, 72, 44, Color.Blue,"Oceania", r.Next()));
-            globes.Add(new Star(152, 172, 22, Color.Yellow,"Sol", r.Next()));
-            globes.Add(new Star(423, 542, 22, Color.Yellow, "Ur", r.Next()));
-            globes.Add(new Star(500, 343, 22, Color.Yellow, "zatl", r.Next()));
+            stars.Add(new Star(112, 314, 22, Color.Red, "Bernard",r.Next(), stars.Count));
+            stars.Add(new Star(52, 72, 44, Color.Blue,"Oceania", r.Next(), stars.Count));
+            stars.Add(new Star(152, 172, 22, Color.Yellow,"Sol", r.Next(), stars.Count));
+            stars.Add(new Star(423, 542, 22, Color.Yellow, "Ur", r.Next(), stars.Count));
+            stars.Add(new Star(500, 343, 22, Color.Yellow, "zatl", r.Next(), stars.Count));
+        }
+       public  static void Update()
+        {
+            foreach (var star in stars)
+            {
+                star.UpdateStar();
+            }
         }
     }
 }

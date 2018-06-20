@@ -12,51 +12,69 @@ namespace MOO
 {
     public partial class Form1 : Form
     {
-        Galaxy galaxy = new Galaxy();
+        //Galaxy galaxy = new Galaxy();
         public Form1()
         {
             InitializeComponent();
-            
-            DrawGlobes();
+            Galaxy.Init();
+            Galaxy.Update();
+            shipViewControl1.UpdateList();
+            DrawGalaxy();
         }
-        public void DrawGlobes()
+
+        public void DrawGalaxy()
         {
+
             Bitmap a = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
-            foreach (var globe in galaxy.globes)
+            DrawStars(a);
+            DrawShips(a);
+            pictureBox1.Image = a;
+        }
+
+        private static void DrawStars(Bitmap a)
+        {
+            foreach (var globe in Galaxy.stars)
             {
                 using (Graphics g = Graphics.FromImage(a))
                 {
                     Pen pen = new Pen(globe.Color);
                     var brush = new SolidBrush(pen.Color);
-                    g.FillEllipse(brush, new Rectangle(globe.X, globe.Y, globe.Diameter, globe.Diameter));
+                    g.FillEllipse(brush, new Rectangle(globe.Location.X, globe.Location.Y, globe.Diameter, globe.Diameter));
                 }
             }
-            pictureBox1.Image = a;
+        }
+        private static void DrawShips(Bitmap a)
+        {
+            foreach (var ship in Galaxy.Ships)
+            {
+                using (Graphics g = Graphics.FromImage(a))
+                {
+                    Pen pen = new Pen(ship.BodyColor);
+                    var brush = new SolidBrush(pen.Color);
+                    g.FillEllipse(brush, new Rectangle(ship.CurrentLocation.X, ship.CurrentLocation.Y, ship.Size, ship.Size));
+                }
+            }
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-          //  textBox1.Text = e.Location.ToString();
-           // textBox1.AppendText(Environment.NewLine);
             Rectangle mouserectangle = new Rectangle(e.X, e.Y, 1, 1);
-          //  textBox1.AppendText(Environment.NewLine);
             if (MouserOverStar(new Point(e.X, e.Y)))
             {
                 Star foundstar = GetStar(new Point(e.X, e.Y));
-                textBox1.Text= "Name: "+foundstar.Name+" has " + foundstar.Planets.Count.ToString()+" planets";
+                textBox1.Text= "Name: "+foundstar.Name+"\n has " + foundstar.Planets.Count.ToString()+" planets";
             }
             else
             {
-            textBox1.Clear();
-
+                textBox1.Clear();
             }
         }
         private bool MouserOverStar(Point point)
         {
             bool overstar = false;
-            foreach (var item in galaxy.globes)
+            foreach (var item in Galaxy.stars)
             {
-                Rectangle globerect = new Rectangle(item.X, item.Y, item.Diameter, item.Diameter);
+                Rectangle globerect = new Rectangle(item.Location.X, item.Location.Y, item.Diameter, item.Diameter);
                 if (globerect.Contains(point))
                 {
                     overstar = true;    
@@ -67,9 +85,9 @@ namespace MOO
         private Star GetStar(Point point)
         {
             Star star = new Star();
-            foreach (var item in galaxy.globes)
+            foreach (var item in Galaxy.stars)
             {
-                Rectangle globerect = new Rectangle(item.X, item.Y, item.Diameter, item.Diameter);
+                Rectangle globerect = new Rectangle(item.Location.X, item.Location.Y, item.Diameter, item.Diameter);
                 if (globerect.Contains(point))
                 {
                     star = item;
@@ -90,23 +108,28 @@ namespace MOO
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            MouseEventArgs ee = e as MouseEventArgs;
-            textBox1.Text = ee.Location.ToString();
-            textBox1.AppendText(Environment.NewLine);
+            //MouseEventArgs ee = e as MouseEventArgs;
+            //textBox1.Text = ee.Location.ToString();
+            //textBox1.AppendText(Environment.NewLine);
 
-            Rectangle rec1 = new Rectangle(ee.X, ee.Y, 5, 5);
-            textBox1.AppendText(Environment.NewLine);
+            //Rectangle rec1 = new Rectangle(ee.X, ee.Y, 5, 5);
+            //textBox1.AppendText(Environment.NewLine);
 
-            // textBox1.AppendText((100*e.Y / galaxy.Size).ToString());
-            foreach (var item in galaxy.globes)
-            {
-                Rectangle globerect = new Rectangle(item.X, item.Y, 5, 5);
-                if (Inside(rec1, globerect))
-                {
-                    textBox1.AppendText("Inside: " + item.Name);
-                    textBox1.AppendText(Environment.NewLine);
-                }
-            }
+            //// textBox1.AppendText((100*e.Y / galaxy.Size).ToString());
+            //foreach (var item in Galaxy.stars)
+            //{
+            //    Rectangle globerect = new Rectangle(item.Location.X, item.Location.Y, 5, 5);
+            //    if (Inside(rec1, globerect))
+            //    {
+            //        textBox1.AppendText("Inside: " + item.Name);
+            //        textBox1.AppendText(Environment.NewLine);
+            //    }
+            //}
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
