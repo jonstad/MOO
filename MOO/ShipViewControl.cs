@@ -23,6 +23,7 @@ namespace MOO
         }
         public void UpdateList()
         {
+            dataGridView1.Rows.Clear();
             foreach (var ship in Galaxy.Ships)
             {
                 string loc = ship.CurrentLocation.X.ToString() + " " + ship.CurrentLocation.Y.ToString();

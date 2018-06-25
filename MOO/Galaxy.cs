@@ -36,14 +36,18 @@ namespace MOO
             stars.Add(new Star(112, 314, 22, Color.Red, "Bernard",r.Next(), stars.Count));
             stars.Add(new Star(52, 72, 44, Color.Blue,"Oceania", r.Next(), stars.Count));
             stars.Add(new Star(152, 172, 22, Color.Yellow,"Sol", r.Next(), stars.Count));
-            stars.Add(new Star(423, 542, 22, Color.Yellow, "Ur", r.Next(), stars.Count));
-            stars.Add(new Star(500, 343, 22, Color.Yellow, "zatl", r.Next(), stars.Count));
+            stars.Add(new Star(323, 242, 22, Color.Yellow, "Ur", r.Next(), stars.Count));
+            stars.Add(new Star(400, 343, 22, Color.Yellow, "zatl", r.Next(), stars.Count));
         }
        public  static void Update()
         {
             foreach (var star in stars)
             {
                 star.UpdateStar();
+            }
+            foreach (var ship in Ships)
+            {
+                ship.Update();
             }
         }
     }

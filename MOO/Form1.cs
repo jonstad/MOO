@@ -13,9 +13,12 @@ namespace MOO
     public partial class Form1 : Form
     {
         //Galaxy galaxy = new Galaxy();
+        Bitmap a;
         public Form1()
         {
             InitializeComponent();
+            MooRandom.Init();
+            a = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
             Galaxy.Init();
             Galaxy.Update();
             shipViewControl1.UpdateList();
@@ -24,8 +27,10 @@ namespace MOO
 
         public void DrawGalaxy()
         {
-
-            Bitmap a = new Bitmap(pictureBox1.Size.Width, pictureBox1.Size.Height);
+            using (Graphics g = Graphics.FromImage(a))
+            {
+                g.Clear(Color.Black);
+            }
             DrawStars(a);
             DrawShips(a);
             pictureBox1.Image = a;
@@ -62,11 +67,12 @@ namespace MOO
             if (MouserOverStar(new Point(e.X, e.Y)))
             {
                 Star foundstar = GetStar(new Point(e.X, e.Y));
-                textBox1.Text= "Name: "+foundstar.Name+"\n has " + foundstar.Planets.Count.ToString()+" planets";
+                starViewControl1.Update(foundstar);
+               // textBox1.Text= "Name: "+foundstar.Name+"\n has " + foundstar.Planets.Count.ToString()+" planets";
             }
             else
             {
-                textBox1.Clear();
+                //textBox1.Clear();
             }
         }
         private bool MouserOverStar(Point point)
@@ -129,7 +135,9 @@ namespace MOO
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
+            shipViewControl1.UpdateList();
+            Galaxy.Update();
+            DrawGalaxy();
         }
     }
 }
